@@ -60,7 +60,7 @@ function clearError() {
 async function handleSave() {
   if (!selectedStaff) { showError('Please tap a staff name first.'); return; }
   if (!amountStr || Number(amountStr) <= 0) { showError('Please enter an amount.'); return; }
-  if (!selectedCategory) { showError('Please tap a category.'); return; }
+  if (!selectedCategory) { selectedCategory = 'Other'; renderCategoryGrid(); }
   clearError();
 
   const key = todayKey();
