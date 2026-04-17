@@ -133,16 +133,21 @@ export function renderEntry(onNavigate: (view: View) => void) {
 
   const app = el('app');
   app.innerHTML = `
-    <div class="header">
-      <div>
-        <div class="section-label" style="margin:0;">Today</div>
-        <div id="today-date" style="font-size:14px;color:var(--text-muted);margin-top:2px;">—</div>
+    <div class="sticky-top">
+      <div class="header" style="margin-bottom:10px;">
+        <div>
+          <div class="section-label" style="margin:0;">Today</div>
+          <div id="today-date" style="font-size:14px;color:var(--text-muted);margin-top:2px;">—</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="section-label" style="margin:0;">Total</div>
+          <div id="today-total" style="font-size:24px;font-weight:500;">₹0</div>
+        </div>
       </div>
-      <div style="text-align:right;">
-        <div class="section-label" style="margin:0;">Total</div>
-        <div id="today-total" style="font-size:24px;font-weight:500;">₹0</div>
-      </div>
+      <button id="save-btn" class="save-btn">Save sale</button>
     </div>
+
+    <div style="height:14px;"></div>
 
     <div class="section-label">Staff</div>
     <div id="staff-grid" class="grid-2"></div>
@@ -155,8 +160,6 @@ export function renderEntry(onNavigate: (view: View) => void) {
     <div id="cat-grid" class="grid-3"></div>
 
     <div id="entry-error" class="validation-error"></div>
-
-    <button id="save-btn" class="save-btn">Save sale</button>
 
     <div id="last-sale-card"></div>
 
