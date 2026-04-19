@@ -1,6 +1,7 @@
 import { loadDay, saveDay } from '../db';
 import { fmt, todayKey, prettyDate } from '../utils';
 import { STAFF_NAMES, CATEGORIES } from '../config';
+import { sendDailyReport } from '../report';
 import type { Sale } from '../types';
 
 function el<T extends HTMLElement>(id: string): T {
@@ -88,7 +89,25 @@ export async function renderToday(onBack: () => void) {
       <button class="back-btn">← Back</button>
     </div>
     <div id="day-list"></div>
+    <button id="send-report-btn" class="export-btn" style="margin-top:16px;">Email daily report</button>
+    <div id="report-status" style="font-size:13px;text-align:center;margin-top:8px;color:var(--text-muted);"></div>
   `;
   app.querySelector<HTMLButtonElement>('.back-btn')!.onclick = onBack;
+
+  const sendBtn = el<HTMLButtonElement>('send-report-btn');
+  sendBtn.onclick = async () => {
+    sendBtn.textContent = 'Sending…';
+    sendBtn.disabled = true;
+    try {
+      await sendDailyReport(todayKey());
+      sendBtn.textContent = 'Email daily report';
+      el('report-status').textContent = '✓ Report sent successfully';
+    } catch {
+      sendBtn.textContent = 'Email daily report';
+      el('report-status').textContent = 'Failed to send. Check your EmailJS credentials.';
+    }
+    sendBtn.disabled = false;
+  };
+
   await renderList();
 }
